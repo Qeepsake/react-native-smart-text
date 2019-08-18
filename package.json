@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "An improved react-native <Text /> component supporting emojis, formatting and nesting",
   "main": "lib/SmartText.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "tsc",

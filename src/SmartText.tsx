@@ -12,25 +12,25 @@ import _isString from "lodash.isstring";
 import Emoji from "node-emoji";
 
 interface IProps {
-  children: any
-  size?: number,
-  color?: string,
-  bold?: boolean,
-  italic?: boolean,
-  underline?: boolean,
-  strikethrough?: boolean,
-  align?: string,
-  lineHeight?: number,
-  family?: string,
-  opacity?: number,
-  style?: object,
-  margin?: number,
-  horizontal?: number,
-  vertical?: number,
-  top?: number,
-  bottom?: number,
-  left?: number,
-  right?: number,
+  children: any;
+  size?: number;
+  color?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
+  align?: string;
+  lineHeight?: number;
+  family?: string;
+  opacity?: number;
+  style?: object;
+  margin?: number;
+  horizontal?: number;
+  vertical?: number;
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
 }
 
 const SmartText = ({
@@ -54,7 +54,7 @@ const SmartText = ({
   left = 0,
   right = 0,
   ...props
-} : IProps): any => {
+}: IProps): any => {
   return (
     <RNText
       style={[
@@ -91,13 +91,13 @@ const SmartText = ({
    *
    * @return {Array || String}
    */
-  function mapChildrenToEmoji(children : any): any {
+  function mapChildrenToEmoji(children: any): any {
     // Id there are no complex elements in 'children' then we emojify the string
     if (_isString(children)) {
       return Emoji.emojify(children);
     }
 
-    return _map(children, (child : string | React.Component) => {
+    return _map(children, (child: string | React.Component) => {
       if (_isString(child)) {
         return Emoji.emojify(child);
       }
@@ -114,7 +114,7 @@ const SmartText = ({
    *
    * @return {Array}
    */
-  function mapChildrenToSmartText(children : any): any {
+  function mapChildrenToSmartText(children: any): any {
     /*
      * No complex objects exist in children, return children and don't map to SmartText,
      * this is important because if we were to `_map` a string it would return an array of
@@ -126,7 +126,7 @@ const SmartText = ({
       return children;
     }
 
-    return _map(children, (child : any, index : number) : any => {
+    return _map(children, (child: any, index: number): any => {
       const type = _get(child, "type", null);
 
       if (type === SmartText) {
