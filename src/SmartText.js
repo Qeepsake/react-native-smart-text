@@ -6,37 +6,16 @@
 /* NPM - Node Package Manage */
 import React from "react";
 import { Text as RNText } from "react-native";
+import PropTypes from "prop-types";
 import _map from "lodash.map";
 import _get from "lodash.get";
-import _isString from "lodash.isstring";
+import _isString from "lodash.isString";
 import Emoji from "node-emoji";
-
-interface IProps {
-  children: any;
-  size?: number;
-  color?: string;
-  bold?: boolean;
-  italic?: boolean;
-  underline?: boolean;
-  strikethrough?: boolean;
-  align?: string;
-  lineHeight?: number;
-  family?: string;
-  opacity?: number;
-  style?: object;
-  margin?: number;
-  horizontal?: number;
-  vertical?: number;
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-}
 
 const SmartText = ({
   children: items,
-  size = 18,
-  color = "#000000",
+  size,
+  color,
   bold,
   italic,
   underline,
@@ -46,15 +25,48 @@ const SmartText = ({
   family,
   opacity,
   style,
-  margin = 0,
-  horizontal = 0,
-  vertical = 0,
-  top = 0,
-  bottom = 0,
-  left = 0,
-  right = 0,
+  m = 0,
+  mh = 0,
+  mv = 0,
+  mt = 0,
+  mb = 0,
+  ml = 0,
+  mr = 0,
+  p = 0,
+  ph = 0,
+  pv = 0,
+  pt = 0,
+  pb = 0,
+  pl = 0,
+  pr = 0,
   ...props
-}: IProps): any => {
+}) => {
+  let smartChildren = items;
+
+  /**
+   * Maps children to limited markdown styles
+   *
+   * *italics* and **bold** supported
+   */
+  // TODO : This currently breaks nesting text components
+//   smartChildren = mapChildrenToTransformer(
+//     smartChildren,
+//     parseAsteriskInMarkdownString
+//   );
+
+  /**
+   * Maps children to <SmartText /> or <span /> components
+   */
+  smartChildren = mapChildrenToSmartText(smartChildren);
+
+  /**
+   * Maps children to relevant emoji e.g. :grin: to 😀
+   *
+   * Full list of supported Emoji available at:
+   * https://unicodey.com/emoji-data/table.htm
+   */
+  smartChildren = mapChildrenToTransformer(smartChildren, Emoji.emojify);
+
   return (
     <RNText
       style={[
@@ -77,29 +89,27 @@ const SmartText = ({
       ]}
       {...props}
     >
-      {mapChildrenToEmoji(mapChildrenToSmartText(items))}
+      {smartChildren}
     </RNText>
   );
 
   /**
-   * Maps children to relevant emoji e.g. :grin: to 😀
+   * Maps children to transformation function
    *
-   * Full list of supported Emoji available at:
-   * https://unicodey.com/emoji-data/table.htm
+   * @param {*} children
+   * @param {*} transform
    *
-   * @param children
-   *
-   * @return {Array || String}
+   * @return {Array | String}
    */
-  function mapChildrenToEmoji(children: any): any {
-    // Id there are no complex elements in 'children' then we emojify the string
+  function mapChildrenToTransformer(children, transform) {
+    // Id there are no complex elements in 'children' then we transform the string
     if (_isString(children)) {
-      return Emoji.emojify(children);
+      return transform(children);
     }
 
-    return _map(children, (child: string | React.Component) => {
+    return _map(children, (child, index) => {
       if (_isString(child)) {
-        return Emoji.emojify(child);
+        return transform(child, index);
       }
 
       return child;
@@ -114,7 +124,7 @@ const SmartText = ({
    *
    * @return {Array}
    */
-  function mapChildrenToSmartText(children: any): any {
+  function mapChildrenToSmartText(children) {
     /*
      * No complex objects exist in children, return children and don't map to SmartText,
      * this is important because if we were to `_map` a string it would return an array of
@@ -126,10 +136,10 @@ const SmartText = ({
       return children;
     }
 
-    return _map(children, (child: any, index: number): any => {
+    return _map(children, (child, index) => {
       const type = _get(child, "type", null);
 
-      if (type === SmartText) {
+      if (type === SmartText || type === "span") {
         const ownProps = _get(child, "props", null);
         const children = _get(ownProps, "children", null);
 
@@ -158,6 +168,42 @@ const SmartText = ({
   }
 
   /**
+   * Parses astericks in a string and replaces it with a styled <span />
+   *
+   * @param {*} string
+   * @param {*} amount
+   *
+   * @return {String}
+   */
+  function parseAsteriskInMarkdownString(string) {
+    let markdown = string;
+
+    // We use (S^t) as a matching pattern as it is a unlikely occurance in any text
+    markdown = markdown.replace(
+      /\*{2}(.*?)\*{2}/g,
+      (match, p1) => `=S^tS^t${p1}S^tS^t=`
+    );
+    markdown = markdown.replace(
+      /\*{1}(.*?)\*{1}/g,
+      (match, p1) => `=S^t${p1}S^t=`
+    );
+
+    return markdown.split(/=/g).map(item => {
+      const text = item.replace(/(S\^t)/g, "");
+
+      // **Double** asterisk is bold
+      if (/(S\^t){2}(.*?)(S\^t){2}/.test(item)) {
+        return <span bold>{text}</span>;
+        // **single** asterisk is italic
+      } else if (/(S\^t){1}(.*?)(S\^t){1}/.test(item)) {
+        return <span italic>{text}</span>;
+      }
+
+      return text;
+    });
+  }
+
+  /**
    * We use this function to build our textDecorationLine style property.
    * We allow this to be configure through two boolean variables `underline`
    * and `strikethrough`, but the textDecorationLine style property needs
@@ -167,7 +213,7 @@ const SmartText = ({
    * @return {string}
    * @private
    */
-  function _resolveTextDecorationLine(): string {
+  function _resolveTextDecorationLine() {
     if (underline && strikethrough) {
       return "underline line-through";
     } else if (underline) {
@@ -180,4 +226,31 @@ const SmartText = ({
   }
 };
 
-export { SmartText };
+SmartText.propTypes = {
+  size: PropTypes.number,
+  color: PropTypes.string,
+  bold: PropTypes.bool,
+  italic: PropTypes.bool,
+  underline: PropTypes.bool,
+  strikethrough: PropTypes.bool,
+  align: PropTypes.string,
+  lineHeight: PropTypes.number,
+  family: PropTypes.string,
+  m: PropTypes.number,
+  mh: PropTypes.number,
+  mv: PropTypes.number,
+  mt: PropTypes.number,
+  mb: PropTypes.number,
+  ml: PropTypes.number,
+  mr: PropTypes.number,
+  p: PropTypes.number,
+  ph: PropTypes.number,
+  pv: PropTypes.number,
+  pt: PropTypes.number,
+  pb: PropTypes.number,
+  pl: PropTypes.number,
+  pr: PropTypes.number,
+  style: PropTypes.any
+};
+
+export default SmartText;

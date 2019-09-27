@@ -1,8 +1,8 @@
 {
   "name": "react-native-smart-text",
   "version": "1.0.0",
-  "description": "An improved react-native <Text /> component supporting emojis, formatting and nesting",
-  "main": "lib/SmartText.js",
+  "description": "A starter template for building a module in TypeScript and publishing to NPM",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
@@ -16,14 +16,13 @@
     "url": "git+https://github.com/lukebrandonfarrell/react-native-smart-text.git"
   },
   "keywords": [
-    "react-native",
-    "text",
-    "text",
-    "component",
-    "<Text />",
-    "emoji",
-    "format",
-    "advanced"
+    "npm",
+    "module",
+    "publish",
+    "starter",
+    "react",
+    "typescript",
+    "open-source"
   ],
   "author": "Luke Brandon Farrell",
   "license": "MIT",
@@ -34,16 +33,10 @@
   "devDependencies": {
     "prettier": "^1.18.2",
     "react": "^16.9.0",
-    "react-native": "^0.60.5",
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@types/lodash.get": "^4.4.6",
-    "@types/lodash.isstring": "^4.0.6",
-    "@types/lodash.map": "^4.6.13",
-    "@types/node-emoji": "^1.8.1",
     "@types/react": "^16.9.2",
-    "@types/react-native": "^0.60.6",
     "lodash.get": "^4.4.2",
     "lodash.isstring": "^4.0.1",
     "lodash.map": "^4.6.0",

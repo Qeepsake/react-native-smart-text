@@ -3,11 +3,12 @@
       "target": "es5",
       "module": "commonjs",
       "declaration": true,
-      "outDir": "./lib",
+      "outDir": "src",
       "strict": true,
       "jsx": "react",
       "skipLibCheck": true,
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "allowJs": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/__tests__/*"]
