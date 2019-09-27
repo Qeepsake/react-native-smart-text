@@ -28,32 +28,6 @@ The `<LightText />` componnet takes all the same props as `<SmartText />` but ha
 to enjoy all the benefits of easy styling and positioning without any of the extra code or processing which comes with `<SmartText />`.
 
 ## Props
-children: items,
-  size,
-  color,
-  bold,
-  italic,
-  underline,
-  strikethrough,
-  align,
-  lineHeight,
-  family,
-  opacity,
-  style,
-  m = 0,
-  mh = 0,
-  mv = 0,
-  mt = 0,
-  mb = 0,
-  ml = 0,
-  mr = 0,
-  p = 0,
-  ph = 0,
-  pv = 0,
-  pt = 0,
-  pb = 0,
-  pl = 0,
-  pr = 0,
 
 | Prop                | Type          | Optional  |                                                               
 | ------------------- | ------------- | --------- |
