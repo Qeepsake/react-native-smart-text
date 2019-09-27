@@ -9,7 +9,7 @@ import { Text as RNText } from 'react-native';
 import PropTypes from 'prop-types';
 import _map from 'lodash.map';
 import _get from 'lodash.get';
-import _isString from 'lodash.isString';
+import _isString from 'lodash.isstring';
 import Emoji from 'node-emoji';
 
 const SmartText = ({
