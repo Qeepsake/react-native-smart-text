@@ -11,7 +11,7 @@ Install via npm:
 
 To use in React Native. Import:
 ```js
- import { SmartText, LightText } from 'react-native-images-collage';
+ import { SmartText, LightText } from 'react-native-smart-text';
 ```
 
 ### Smart Text
