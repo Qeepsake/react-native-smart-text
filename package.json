@@ -1,6 +1,6 @@
 {
   "name": "react-native-smart-text",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A starter template for building a module in TypeScript and publishing to NPM",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
