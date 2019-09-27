@@ -117,4 +117,4 @@ LightText.propTypes = {
   style: PropTypes.any,
 };
 
-export default SmartText;
+export default LightText;
