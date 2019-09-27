@@ -18,11 +18,14 @@
   "keywords": [
     "npm",
     "module",
-    "publish",
-    "starter",
+    "component",
+    "nesting",
     "react",
-    "typescript",
-    "open-source"
+    "react-native",
+    "open-source",
+    "emojis",
+    "markdown",
+    "text"
   ],
   "author": "Luke Brandon Farrell",
   "license": "MIT",
