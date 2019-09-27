@@ -9,7 +9,6 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"src/**/*.js\"",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run format"
   },
   "repository": {
     "type": "git",
