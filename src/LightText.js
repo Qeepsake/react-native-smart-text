@@ -4,9 +4,9 @@
  */
 
 /* NPM - Node Package Manage */
-import React from "react";
-import { Text as RNText } from "react-native";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Text as RNText } from 'react-native';
+import PropTypes from 'prop-types';
 
 const LightText = ({
   children,
@@ -44,8 +44,8 @@ const LightText = ({
           color,
           fontFamily: family,
           fontSize: size,
-          fontWeight: bold ? "bold" : "normal",
-          fontStyle: italic ? "italic" : "normal",
+          fontWeight: bold ? 'bold' : 'normal',
+          fontStyle: italic ? 'italic' : 'normal',
           textAlign: align,
           lineHeight: lineHeight,
           textDecorationLine: _resolveTextDecorationLine(),
@@ -57,9 +57,9 @@ const LightText = ({
           paddingBottom: pb || pv || p,
           paddingLeft: pl || ph || p,
           paddingRight: pr || ph || p,
-          opacity
+          opacity,
         },
-        style
+        style,
       ]}
       {...props}
     >
@@ -79,14 +79,14 @@ const LightText = ({
    */
   function _resolveTextDecorationLine() {
     if (underline && strikethrough) {
-      return "underline line-through";
+      return 'underline line-through';
     } else if (underline) {
-      return "underline";
+      return 'underline';
     } else if (strikethrough) {
-      return "line-through";
+      return 'line-through';
     }
 
-    return "none";
+    return 'none';
   }
 };
 
@@ -114,7 +114,7 @@ LightText.propTypes = {
   pb: PropTypes.number,
   pl: PropTypes.number,
   pr: PropTypes.number,
-  style: PropTypes.any
+  style: PropTypes.any,
 };
 
 export default SmartText;

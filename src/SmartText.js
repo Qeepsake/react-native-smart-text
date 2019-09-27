@@ -4,13 +4,13 @@
  */
 
 /* NPM - Node Package Manage */
-import React from "react";
-import { Text as RNText } from "react-native";
-import PropTypes from "prop-types";
-import _map from "lodash.map";
-import _get from "lodash.get";
-import _isString from "lodash.isString";
-import Emoji from "node-emoji";
+import React from 'react';
+import { Text as RNText } from 'react-native';
+import PropTypes from 'prop-types';
+import _map from 'lodash.map';
+import _get from 'lodash.get';
+import _isString from 'lodash.isString';
+import Emoji from 'node-emoji';
 
 const SmartText = ({
   children: items,
@@ -49,10 +49,10 @@ const SmartText = ({
    * *italics* and **bold** supported
    */
   // TODO : This currently breaks nesting text components
-//   smartChildren = mapChildrenToTransformer(
-//     smartChildren,
-//     parseAsteriskInMarkdownString
-//   );
+  //   smartChildren = mapChildrenToTransformer(
+  //     smartChildren,
+  //     parseAsteriskInMarkdownString
+  //   );
 
   /**
    * Maps children to <SmartText /> or <span /> components
@@ -74,8 +74,8 @@ const SmartText = ({
           color,
           fontFamily: family,
           fontSize: size,
-          fontWeight: bold ? "bold" : "normal",
-          fontStyle: italic ? "italic" : "normal",
+          fontWeight: bold ? 'bold' : 'normal',
+          fontStyle: italic ? 'italic' : 'normal',
           textAlign: align,
           lineHeight: lineHeight,
           textDecorationLine: _resolveTextDecorationLine(),
@@ -83,9 +83,9 @@ const SmartText = ({
           marginBottom: bottom || vertical || margin,
           marginLeft: left || horizontal || margin,
           marginRight: right || horizontal || margin,
-          opacity
+          opacity,
         },
-        style
+        style,
       ]}
       {...props}
     >
@@ -137,11 +137,11 @@ const SmartText = ({
     }
 
     return _map(children, (child, index) => {
-      const type = _get(child, "type", null);
+      const type = _get(child, 'type', null);
 
-      if (type === SmartText || type === "span") {
-        const ownProps = _get(child, "props", null);
-        const children = _get(ownProps, "children", null);
+      if (type === SmartText || type === 'span') {
+        const ownProps = _get(child, 'props', null);
+        const children = _get(ownProps, 'children', null);
 
         return (
           <SmartText
@@ -181,15 +181,15 @@ const SmartText = ({
     // We use (S^t) as a matching pattern as it is a unlikely occurance in any text
     markdown = markdown.replace(
       /\*{2}(.*?)\*{2}/g,
-      (match, p1) => `=S^tS^t${p1}S^tS^t=`
+      (match, p1) => `=S^tS^t${p1}S^tS^t=`,
     );
     markdown = markdown.replace(
       /\*{1}(.*?)\*{1}/g,
-      (match, p1) => `=S^t${p1}S^t=`
+      (match, p1) => `=S^t${p1}S^t=`,
     );
 
     return markdown.split(/=/g).map(item => {
-      const text = item.replace(/(S\^t)/g, "");
+      const text = item.replace(/(S\^t)/g, '');
 
       // **Double** asterisk is bold
       if (/(S\^t){2}(.*?)(S\^t){2}/.test(item)) {
@@ -215,14 +215,14 @@ const SmartText = ({
    */
   function _resolveTextDecorationLine() {
     if (underline && strikethrough) {
-      return "underline line-through";
+      return 'underline line-through';
     } else if (underline) {
-      return "underline";
+      return 'underline';
     } else if (strikethrough) {
-      return "line-through";
+      return 'line-through';
     }
 
-    return "none";
+    return 'none';
   }
 };
 
@@ -250,7 +250,7 @@ SmartText.propTypes = {
   pb: PropTypes.number,
   pl: PropTypes.number,
   pr: PropTypes.number,
-  style: PropTypes.any
+  style: PropTypes.any,
 };
 
 export default SmartText;
