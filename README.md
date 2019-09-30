@@ -18,8 +18,8 @@ To use in React Native. Import:
 
 The `<SmartText />` component contains a number of abilities:
 
-1. Emoji 😄🥶🤯 it uses [node-emoji](https://www.npmjs.com/package/node-emoji) under the hood
-2. Markdown support for *italics* and **bold**
+1. Emoji 😄🥶🤯 it uses [node-emoji](https://www.npmjs.com/package/node-emoji) under the hood (e.g. 'I love it when you :grin:')
+2. Markdown support for *italics* and **bold** (e.g. for \*italics\*, for \*\*bold\*\*)
 3. Nested text support e.g. `<SmartText size={12} color='black'>My nested <SmartText bold>test!</SmartText></SmartText>`  where parent props will be inherited by children.
 
 ## Light Text
