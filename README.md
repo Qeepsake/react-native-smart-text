@@ -20,12 +20,14 @@ The `<SmartText />` component contains a number of abilities:
 
 1. Emoji 😄🥶🤯 it uses [node-emoji](https://www.npmjs.com/package/node-emoji) under the hood
 2. Markdown support for *italics* and **bold**
-3. Nested text support e.g. `<SmartText size={12} color='black'>My nested <SmartText bold>test!</SmartText>` where parent props will be inherited by children.
+3. Nested text support e.g. `<SmartText size={12} color='black'>My nested <SmartText bold>test!</SmartText>`  where parent props will be inherited by children.
 
 ## Light Text
 
 The `<LightText />` componnet takes all the same props as `<SmartText />` but has no abilities! This component can be used
 to enjoy all the benefits of easy styling and positioning without any of the extra code or processing which comes with `<SmartText />`.
+
+- You can also nest `LightText` in a `SmartText`: `<SmartText size={12} color='black'>My nested <LightText bold>test!</LightText>`
 
 ## Props
 

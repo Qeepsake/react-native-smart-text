@@ -4,13 +4,16 @@
  */
 
 /* NPM - Node Package Manage */
-import React from 'react';
-import { Text as RNText } from 'react-native';
-import PropTypes from 'prop-types';
-import _map from 'lodash.map';
 import _get from 'lodash.get';
 import _isString from 'lodash.isstring';
+import _map from 'lodash.map';
+import _flatten from 'lodash.flatten';
 import Emoji from 'node-emoji';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Text as RNText } from 'react-native';
+/** Components */
+import LightText from './LightText';
 
 const SmartText = ({
   children: items,
@@ -48,11 +51,10 @@ const SmartText = ({
    *
    * *italics* and **bold** supported
    */
-  // TODO : This currently breaks nesting text components
-  //   smartChildren = mapChildrenToTransformer(
-  //     smartChildren,
-  //     parseAsteriskInMarkdownString
-  //   );
+  smartChildren = mapChildrenToTransformer(
+    smartChildren,
+    parseAsteriskInMarkdownString,
+  );
 
   /**
    * Maps children to <SmartText /> or <span /> components
@@ -111,13 +113,15 @@ const SmartText = ({
       return transform(children);
     }
 
-    return _map(children, (child, index) => {
-      if (_isString(child)) {
-        return transform(child, index);
-      }
+    return _flatten(
+      _map(children, (child, index) => {
+        if (_isString(child)) {
+          return transform(child, index);
+        }
 
-      return child;
-    });
+        return child;
+      }),
+    );
   }
 
   /**
@@ -143,7 +147,7 @@ const SmartText = ({
     return _map(children, (child, index) => {
       const type = _get(child, 'type', null);
 
-      if (type === SmartText || type === 'span') {
+      if (type === SmartText || type === LightText) {
         const ownProps = _get(child, 'props', null);
         const children = _get(ownProps, 'children', null);
 
@@ -192,15 +196,23 @@ const SmartText = ({
       (match, p1) => `=S^t${p1}S^t=`,
     );
 
-    return markdown.split(/=/g).map(item => {
+    return markdown.split(/=/g).map((item, index) => {
       const text = item.replace(/(S\^t)/g, '');
 
       // **Double** asterisk is bold
       if (/(S\^t){2}(.*?)(S\^t){2}/.test(item)) {
-        return <span bold>{text}</span>;
+        return (
+          <LightText key={index} bold>
+            {text}
+          </LightText>
+        );
         // **single** asterisk is italic
       } else if (/(S\^t){1}(.*?)(S\^t){1}/.test(item)) {
-        return <span italic>{text}</span>;
+        return (
+          <LightText key={index} italic>
+            {text}
+          </LightText>
+        );
       }
 
       return text;
