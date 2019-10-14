@@ -32,8 +32,8 @@
   },
   "homepage": "https://github.com/lukebrandonfarrell/react-native-smart-text#readme",
   "devDependencies": {
-    "husky": "^3.0.7",
-    "lint-staged": "^9.4.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "typescript": "^3.5.3"
@@ -44,7 +44,8 @@
     "lodash.get": "^4.4.2",
     "lodash.isstring": "^4.0.1",
     "lodash.map": "^4.6.0",
-    "node-emoji": "^1.10.0"
+    "node-emoji": "^1.10.0",
+    "@carimus/react-native-fonts": "^1.0.0"
   },
   "husky": {
     "hooks": {
