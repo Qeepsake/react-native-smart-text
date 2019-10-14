@@ -54,7 +54,6 @@
   "lint-staged": {
     "./src/**/*.js": [
       "npm run format",
-      "tsc",
       "git add"
     ]
   }

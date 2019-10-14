@@ -4,15 +4,18 @@
  */
 
 /* NPM - Node Package Manage */
+import React, { useContext } from 'react';
+import { Text as RNText } from 'react-native';
+import PropTypes from 'prop-types';
 import _get from 'lodash.get';
 import _isString from 'lodash.isstring';
 import _map from 'lodash.map';
 import _flatten from 'lodash.flatten';
 import Emoji from 'node-emoji';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Text as RNText } from 'react-native';
-/** Components */
+/* Utils - Project Utilities */
+import { _getFontStyles, _resolveTextDecorationLine } from './utils';
+import { FontContext } from './index';
+/* Components */
 import LightText from './LightText';
 
 const SmartText = ({
@@ -45,6 +48,11 @@ const SmartText = ({
   ...props
 }) => {
   let smartChildren = items;
+  const fonts = useContext(FontContext);
+  const fontStyles = _getFontStyles(fonts, family, {
+    weight: bold,
+    style: italic ? 'italic' : 'normal',
+  });
 
   /**
    * Maps children to limited markdown styles
@@ -74,13 +82,13 @@ const SmartText = ({
       style={[
         {
           color,
-          fontFamily: family,
           fontSize: size,
-          fontWeight: bold ? 'bold' : 'normal',
-          fontStyle: italic ? 'italic' : 'normal',
           textAlign: align,
           lineHeight: lineHeight,
-          textDecorationLine: _resolveTextDecorationLine(),
+          textDecorationLine: _resolveTextDecorationLine(
+            underline,
+            strikethrough,
+          ),
           marginTop: mt || mv || m,
           marginBottom: mb || mv || m,
           marginLeft: ml || mh || m,
@@ -90,6 +98,7 @@ const SmartText = ({
           paddingLeft: pl || ph || p,
           paddingRight: pr || ph || p,
           opacity,
+          ...fontStyles,
         },
         style,
       ]}
@@ -218,34 +227,12 @@ const SmartText = ({
       return text;
     });
   }
-
-  /**
-   * We use this function to build our textDecorationLine style property.
-   * We allow this to be configure through two boolean variables `underline`
-   * and `strikethrough`, but the textDecorationLine style property needs
-   * a string which controls these two properties, one of:
-   * ['none', 'underline', 'line-through', 'underline line-through']
-   *
-   * @return {string}
-   * @private
-   */
-  function _resolveTextDecorationLine() {
-    if (underline && strikethrough) {
-      return 'underline line-through';
-    } else if (underline) {
-      return 'underline';
-    } else if (strikethrough) {
-      return 'line-through';
-    }
-
-    return 'none';
-  }
 };
 
 SmartText.propTypes = {
   size: PropTypes.number,
   color: PropTypes.string,
-  bold: PropTypes.bool,
+  bold: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   italic: PropTypes.bool,
   underline: PropTypes.bool,
   strikethrough: PropTypes.bool,

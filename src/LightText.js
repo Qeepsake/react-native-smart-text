@@ -4,9 +4,12 @@
  */
 
 /* NPM - Node Package Manage */
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text as RNText } from 'react-native';
 import PropTypes from 'prop-types';
+/* Utils - Project Utilities */
+import { _getFontStyles, _resolveTextDecorationLine } from './utils';
+import { FontContext } from './index';
 
 const LightText = ({
   children,
@@ -37,18 +40,24 @@ const LightText = ({
   pr = 0,
   ...props
 }) => {
+  const fonts = useContext(FontContext);
+  const fontStyles = _getFontStyles(fonts, family, {
+    weight: bold,
+    style: italic ? 'italic' : 'normal',
+  });
+
   return (
     <RNText
       style={[
         {
           color,
-          fontFamily: family,
           fontSize: size,
-          fontWeight: bold ? 'bold' : 'normal',
-          fontStyle: italic ? 'italic' : 'normal',
           textAlign: align,
           lineHeight: lineHeight,
-          textDecorationLine: _resolveTextDecorationLine(),
+          textDecorationLine: _resolveTextDecorationLine(
+            underline,
+            strikethrough,
+          ),
           marginTop: mt || mv || m,
           marginBottom: mb || mv || m,
           marginLeft: ml || mh || m,
@@ -58,6 +67,7 @@ const LightText = ({
           paddingLeft: pl || ph || p,
           paddingRight: pr || ph || p,
           opacity,
+          ...fontStyles,
         },
         style,
       ]}
@@ -66,34 +76,12 @@ const LightText = ({
       {children}
     </RNText>
   );
-
-  /**
-   * We use this function to build our textDecorationLine style property.
-   * We allow this to be configure through two boolean variables `underline`
-   * and `strikethrough`, but the textDecorationLine style property needs
-   * a string which controls these two properties, one of:
-   * ['none', 'underline', 'line-through', 'underline line-through']
-   *
-   * @return {string}
-   * @private
-   */
-  function _resolveTextDecorationLine() {
-    if (underline && strikethrough) {
-      return 'underline line-through';
-    } else if (underline) {
-      return 'underline';
-    } else if (strikethrough) {
-      return 'line-through';
-    }
-
-    return 'none';
-  }
 };
 
 LightText.propTypes = {
   size: PropTypes.number,
   color: PropTypes.string,
-  bold: PropTypes.bool,
+  bold: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   italic: PropTypes.bool,
   underline: PropTypes.bool,
   strikethrough: PropTypes.bool,
