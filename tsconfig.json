@@ -7,7 +7,9 @@
       "jsx": "react",
       "skipLibCheck": true,
       "allowSyntheticDefaultImports": true,
-      "allowJs": true
+      "allowJs": true,
+      "noImplicitAny": false,
+      "moduleResolution": "node"
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/__tests__/*"]

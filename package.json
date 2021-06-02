@@ -7,7 +7,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"src/**/*.js\""
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"src/**/*.js\"",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable",
+    "pre-commit": "lint-staged",
+    "postinstall": "husky install"
   },
   "repository": {
     "type": "git",
@@ -32,14 +36,19 @@
   },
   "homepage": "https://github.com/lukebrandonfarrell/react-native-smart-text#readme",
   "devDependencies": {
-    "husky": "^3.0.7",
-    "lint-staged": "^9.4.0",
-    "prettier": "^1.18.2",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@types/react-native": "^0.64.9",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "pinst": "^2.1.6",
+    "prettier": "^1.19.1",
     "react": "^16.9.0",
-    "typescript": "^3.5.3"
+    "semantic-release": "^17.4.3",
+    "typescript": "^3.9.9",
+    "@types/react": "^16.9.2"
   },
   "dependencies": {
-    "@types/react": "^16.9.2",
     "lodash.flatten": "^4.4.0",
     "lodash.get": "^4.4.2",
     "lodash.isstring": "^4.0.1",

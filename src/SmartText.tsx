@@ -202,6 +202,7 @@ const SmartText = ({
       // **Double** asterisk is bold
       if (/(S\^t){2}(.*?)(S\^t){2}/.test(item)) {
         return (
+          // @ts-ignore
           <LightText key={index} bold>
             {text}
           </LightText>
@@ -209,6 +210,7 @@ const SmartText = ({
         // **single** asterisk is italic
       } else if (/(S\^t){1}(.*?)(S\^t){1}/.test(item)) {
         return (
+          // @ts-ignore
           <LightText key={index} italic>
             {text}
           </LightText>
