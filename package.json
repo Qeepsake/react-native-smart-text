@@ -44,7 +44,7 @@
     "pinst": "^2.1.6",
     "prettier": "^1.19.1",
     "react": "^16.9.0",
-    "semantic-release": "^17.4.3",
+    "semantic-release": "^19.0.3",
     "typescript": "^3.9.9",
     "@types/react": "^16.9.2"
   },
